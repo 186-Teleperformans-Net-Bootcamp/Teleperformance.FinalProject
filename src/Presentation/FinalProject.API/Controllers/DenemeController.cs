@@ -8,7 +8,11 @@ namespace FinalProject.API.Controllers
     public class DenemeController : ControllerBase
     {
 
-
+        [HttpGet]
+        public IActionResult get()
+        {
+            return Ok("burası serbest alana gardas");
+        }
 
     }
 }

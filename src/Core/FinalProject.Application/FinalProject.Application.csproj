@@ -7,11 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinalProject.Domain\FinalProject.Domain.csproj" />
+    <Folder Include="Features\ProductFeatures - Copy %282%29\Commands\" />
+    <Folder Include="Features\ProductFeatures - Copy %282%29\Queries\" />
+    <Folder Include="Features\ProductFeatures - Copy %283%29\Commands\" />
+    <Folder Include="Features\ProductFeatures - Copy %283%29\Queries\" />
+    <Folder Include="Features\UserFeatures\Queries\" />
+    <Folder Include="Features\ProductFeatures\Commands\" />
+    <Folder Include="Features\ProductFeatures\Queries\" />
+    <Folder Include="DTOs\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalProject.Domain\FinalProject.Domain.csproj" />
   </ItemGroup>
 
 </Project>

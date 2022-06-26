@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +8,11 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Application
 {
-    public class ApplicationServiceRegistration
+    public static class ApplicationServiceRegistration
     {
-        //public static void AddApplicationServices(this IServiceCollection)
+        public static void AddApplicationServices(this IServiceCollection services)
+        {
+            services.AddMediatR(typeof(ApplicationServiceRegistration));
+        }
     }
 }
