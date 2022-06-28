@@ -7,12 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\ProductFeatures - Copy %282%29\Commands\" />
-    <Folder Include="Features\ProductFeatures - Copy %282%29\Queries\" />
-    <Folder Include="Features\ProductFeatures - Copy %283%29\Commands\" />
-    <Folder Include="Features\ProductFeatures - Copy %283%29\Queries\" />
+    <Folder Include="Features\ShopListFeatures\Queries\" />
+    <Folder Include="Features\CategoryFeatures\Commands\" />
+    <Folder Include="Features\CategoryFeatures\Queries\" />
     <Folder Include="Features\UserFeatures\Queries\" />
-    <Folder Include="Features\ProductFeatures\Commands\" />
     <Folder Include="Features\ProductFeatures\Queries\" />
     <Folder Include="DTOs\" />
   </ItemGroup>

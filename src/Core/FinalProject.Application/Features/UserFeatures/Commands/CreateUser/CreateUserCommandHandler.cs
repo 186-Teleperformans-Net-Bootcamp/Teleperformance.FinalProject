@@ -22,6 +22,8 @@ namespace FinalProject.Application.Features.UserFeatures.Commands.CreateUser
 
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
+            //await _roleManager.CreateAsync(new AppRole { Id = "hebelehübele", Name = "Admin" });
+            //await _roleManager.CreateAsync(new AppRole { Id = "asdasdad", Name = "User" });
             AppUser NewUser = new()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -29,15 +31,16 @@ namespace FinalProject.Application.Features.UserFeatures.Commands.CreateUser
                 FirstName = request.Firstname,
                 LastName = request.Lastname,
                 Email = request.Email,
-                RegistrationDate = DateTime.Now,
+                RegistrationDate = DateTime.UtcNow,
                 isdeleted = false,
+                //SecurityStamp = Guid.NewGuid().ToString()
             };
             //if(request.IsAdmin)
             //{
             //    await _userManager.AddToRoleAsync(NewUser, "Admin");
             //}
-            await _userManager.AddToRoleAsync(NewUser, "User");
             IdentityResult result = await _userManager.CreateAsync(NewUser, request.Password);
+            await _userManager.AddToRoleAsync(NewUser, "User");
 
             CreateUserCommandResponse response = new() { Success = result.Succeeded };
 
