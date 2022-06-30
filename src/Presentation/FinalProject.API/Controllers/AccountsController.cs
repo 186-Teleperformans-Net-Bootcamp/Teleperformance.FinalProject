@@ -1,11 +1,11 @@
 ﻿using FinalProject.Application.Features.UserFeatures.Commands.CheckUser;
 using FinalProject.Application.Features.UserFeatures.Commands.CreateUser;
+using FinalProject.Application.Wrappers.Responses;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProject.API.Controllers
-{  //xss
+{
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
@@ -18,9 +18,9 @@ namespace FinalProject.API.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> CreateUser([FromBody]CreateUserCommandRequest request)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserCommandRequest request)
         {
-            CreateUserCommandResponse response = await _mediator.Send(request);
+            BaseResponse response = await _mediator.Send(request);
             return Ok(response);
         }
 

@@ -1,14 +1,10 @@
 ﻿using FinalProject.Application.Interfaces.Services;
-using FinalProject.Domain;
+using FinalProject.Application.Models.JwtToken;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FinalProject.Infrastructure.Services
 {
@@ -33,14 +29,14 @@ namespace FinalProject.Infrastructure.Services
             SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha256);
 
             //Oluşturulacak token ayarlarını veriyoruz.
-            token.TokenLifeTime = DateTime.UtcNow.AddMinutes(minute);
+            token.TokenLifeTime = DateTime.UtcNow.AddDays(3);//TODO burası değişken olacak
             JwtSecurityToken securityToken = new(
                 audience: _configuration["Token:Audience"],
                 issuer: _configuration["Token:Issuer"],
                 expires: token.TokenLifeTime,
                 notBefore: DateTime.UtcNow,
                 signingCredentials: signingCredentials,
-                claims :  claims
+                claims: claims
                 );
 
             //Token oluşturucu sınıfından bir örnek alalım.

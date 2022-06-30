@@ -1,15 +1,11 @@
-﻿using FinalProject.Domain.Entities.Identity;
-using MediatR;
+﻿using FinalProject.Application.Wrappers.Responses;
+using FinalProject.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MediatR;
 
 namespace FinalProject.Application.Features.UserFeatures.Commands.CreateUser
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, CreateUserCommandResponse>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, BaseResponse>
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<AppRole> _roleManager;
@@ -20,10 +16,10 @@ namespace FinalProject.Application.Features.UserFeatures.Commands.CreateUser
             _roleManager = roleManager;
         }
 
-        public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
-            //await _roleManager.CreateAsync(new AppRole { Id = "hebelehübele", Name = "Admin" });
-            //await _roleManager.CreateAsync(new AppRole { Id = "asdasdad", Name = "User" });
+            //await _roleManager.CreateAsync(new AppRole { Id = "sdfsdfsfs", Name = "Admin" });
+            //await _roleManager.CreateAsync(new AppRole { Id = "dfsdffsf", Name = "User" });
             AppUser NewUser = new()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -32,8 +28,6 @@ namespace FinalProject.Application.Features.UserFeatures.Commands.CreateUser
                 LastName = request.Lastname,
                 Email = request.Email,
                 RegistrationDate = DateTime.UtcNow,
-                isdeleted = false,
-                //SecurityStamp = Guid.NewGuid().ToString()
             };
             //if(request.IsAdmin)
             //{
@@ -42,7 +36,7 @@ namespace FinalProject.Application.Features.UserFeatures.Commands.CreateUser
             IdentityResult result = await _userManager.CreateAsync(NewUser, request.Password);
             await _userManager.AddToRoleAsync(NewUser, "User");
 
-            CreateUserCommandResponse response = new() { Success = result.Succeeded };
+            BaseResponse response = new() { Success = result.Succeeded };
 
             if (result.Succeeded)
                 response.Message = "Kullanıcı başarıyla oluşturulmuştur.";

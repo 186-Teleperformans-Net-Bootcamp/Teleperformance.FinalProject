@@ -1,13 +1,13 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FinalProject.Application.Wrappers.Responses;
+using MediatR;
+
 
 namespace FinalProject.Application.Features.ShopListFeatures.Commands.CreateShopList
 {
-    public class CreateShopListCommandRequest : IRequest<CreateShopListCommandResponse>
+    public class CreateShopListCommandRequest : IRequest<BaseResponse>
     {
+        public string? AppUserId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

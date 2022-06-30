@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace FinalProject.Persistence.Migrations.PostgreSql
+namespace FinalProject.Persistence.Migrations
 {
     [DbContext(typeof(PostgreSqlDbContext))]
-    [Migration("20220628102749_mig_123")]
-    partial class mig_123
+    [Migration("20220629200935_migg_1")]
+    partial class migg_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,7 +37,7 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ShopListId")
+                    b.Property<Guid>("ShopListId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("UpdateDate")
@@ -160,7 +160,7 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("CategoryId")
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreationDate")
@@ -195,6 +195,10 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -213,6 +217,8 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("ShopLists");
                 });
@@ -325,16 +331,35 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
 
             modelBuilder.Entity("FinalProject.Domain.Entities.Category", b =>
                 {
-                    b.HasOne("FinalProject.Domain.Entities.ShopList", null)
+                    b.HasOne("FinalProject.Domain.Entities.ShopList", "ShopList")
                         .WithMany("Categories")
-                        .HasForeignKey("ShopListId");
+                        .HasForeignKey("ShopListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ShopList");
                 });
 
             modelBuilder.Entity("FinalProject.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("FinalProject.Domain.Entities.Category", null)
+                    b.HasOne("FinalProject.Domain.Entities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("FinalProject.Domain.Entities.ShopList", b =>
+                {
+                    b.HasOne("FinalProject.Domain.Entities.Identity.AppUser", "AppUser")
+                        .WithMany("ShopLists")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -391,6 +416,11 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
             modelBuilder.Entity("FinalProject.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("FinalProject.Domain.Entities.Identity.AppUser", b =>
+                {
+                    b.Navigation("ShopLists");
                 });
 
             modelBuilder.Entity("FinalProject.Domain.Entities.ShopList", b =>

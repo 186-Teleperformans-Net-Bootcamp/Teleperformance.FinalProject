@@ -1,5 +1,4 @@
 ﻿
-
 namespace FinalProject.Domain.Entities.Enums
 {
     public enum MeasurementType

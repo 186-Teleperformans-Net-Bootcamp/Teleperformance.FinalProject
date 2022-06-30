@@ -1,6 +1,8 @@
-﻿using FinalProject.Application.Interfaces.Repositories.ProductRepositories;
-using FinalProject.Domain.Entities.Enums;
+﻿using FinalProject.Application.Features.ProductFeatures.Commands.CreateProduct;
+using FinalProject.Application.Features.ProductFeatures.Commands.UpdateProduct;
+using FinalProject.Application.Wrappers.Responses;
 using Microsoft.AspNetCore.Mvc;
+using MediatR;
 
 
 namespace FinalProject.API.Controllers
@@ -9,25 +11,27 @@ namespace FinalProject.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductCommandRepository _repository;
+        private readonly IMediator _mediator;
 
-        public ProductsController(IProductCommandRepository repository)
+        public ProductsController(IMediator mediator)
         {
-            _repository = repository;
+            _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(CreateProductCommandRequest request)
         {
-            bool b = await _repository.AddAsync(new Domain.Entities.Product()
-            {
-                //Id = Guid.NewGuid(),
-                Name = "Cips",
-                Quantity = 1,
-                MeasurementType = MeasurementType.Piece
-            });
-            _repository.SaveAsync();
-            return Ok("eklendi ellamm" + b);
+            BaseResponse response = await _mediator.Send(request);
+
+            return Ok(response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct(UpdateProductCommandRequest request)
+        {
+            BaseResponse response = await _mediator.Send(request);
+
+            return Ok(response);
         }
     }
 }

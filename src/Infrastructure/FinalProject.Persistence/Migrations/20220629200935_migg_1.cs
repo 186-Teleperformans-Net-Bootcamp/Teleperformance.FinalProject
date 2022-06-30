@@ -4,9 +4,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace FinalProject.Persistence.Migrations.PostgreSql
+namespace FinalProject.Persistence.Migrations
 {
-    public partial class mig_1 : Migration
+    public partial class migg_1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,22 +51,6 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ShopLists",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    IsCompleted = table.Column<bool>(type: "boolean", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShopLists", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -176,12 +160,37 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShopLists",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    IsCompleted = table.Column<bool>(type: "boolean", nullable: false),
+                    AppUserId = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShopLists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShopLists_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ShopListId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    ShopListId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -190,7 +199,8 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
                         name: "FK_Categories_ShopLists_ShopListId",
                         column: x => x.ShopListId,
                         principalTable: "ShopLists",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,8 +210,11 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Quantity = table.Column<float>(type: "real", nullable: false),
                     MeasurementType = table.Column<int>(type: "integer", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    IsPurchased = table.Column<bool>(type: "boolean", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -210,7 +223,8 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -259,6 +273,11 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShopLists_AppUserId",
+                table: "ShopLists",
+                column: "AppUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -285,13 +304,13 @@ namespace FinalProject.Persistence.Migrations.PostgreSql
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "ShopLists");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

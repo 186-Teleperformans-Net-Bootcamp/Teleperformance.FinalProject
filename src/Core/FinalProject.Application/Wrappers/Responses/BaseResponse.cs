@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalProject.Application.Features.UserFeatures.Commands.CreateUser
+namespace FinalProject.Application.Wrappers.Responses
 {
-    public class CreateUserCommandResponse
+    public class BaseResponse
     {
-        public bool Success{ get; set; }
+        public bool Success { get; set; }
         public string Message { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FinalProject.Application.Wrappers.Responses;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Application.Features.UserFeatures.Commands.CreateUser
 {
-    public class CreateUserCommandRequest : IRequest<CreateUserCommandResponse>
+    public class CreateUserCommandRequest : IRequest<BaseResponse>
     {
         public string Firstname { get; set; }
         public string Lastname { get; set; }

@@ -1,9 +1,5 @@
-﻿using FinalProject.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FinalProject.Application.Models.JwtToken;
+
 
 namespace FinalProject.Application.Features.UserFeatures.Commands.CheckUser
 {

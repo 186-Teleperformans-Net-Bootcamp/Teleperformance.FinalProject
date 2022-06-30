@@ -1,6 +1,6 @@
 ﻿
 
-namespace FinalProject.Domain
+namespace FinalProject.Application.Models.JwtToken
 {
     public class Token
     {

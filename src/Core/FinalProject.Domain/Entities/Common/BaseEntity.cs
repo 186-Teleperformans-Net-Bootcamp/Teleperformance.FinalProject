@@ -1,5 +1,4 @@
 ﻿
-
 namespace FinalProject.Domain.Entities.Common
 {
     public class BaseEntity
@@ -8,7 +7,5 @@ namespace FinalProject.Domain.Entities.Common
         public string Name { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime UpdateDate { get; set; }
-
-
     }
 }
