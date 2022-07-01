@@ -3,9 +3,9 @@ using FinalProject.Application.Wrappers.Responses;
 using FinalProject.Domain.Entities;
 
 
-namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetShopListByUser
+namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopListByUser
 {
-    public class GetShopListByUserQueryResponse : BaseResponse
+    public class GetAllShopListByUserQueryResponse : BaseResponse
     {
         public List<ShopList> Lists { get; set; }
         public PagingInfo PagingInfo { get; set; }

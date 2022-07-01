@@ -2,22 +2,23 @@
 using FinalProject.Application.Models.Paging;
 using FinalProject.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
-namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetShopListByUser
+namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopListByUser
 {
-    public class GetShopListByUserQueryHandler : IRequestHandler<GetShopListByUserQueryRequest, GetShopListByUserQueryResponse>
+    public class GetAllShopListByUserQueryHandler : IRequestHandler<GetAllShopListByUserQueryRequest, GetAllShopListByUserQueryResponse>
     {
         private readonly IShopListQueryRepository _repository;
 
-        public GetShopListByUserQueryHandler(IShopListQueryRepository repository)
+        public GetAllShopListByUserQueryHandler(IShopListQueryRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<GetShopListByUserQueryResponse> Handle(GetShopListByUserQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GetAllShopListByUserQueryResponse> Handle(GetAllShopListByUserQueryRequest request, CancellationToken cancellationToken)
         {
 
-            IQueryable<ShopList> Lists = _repository.GetWhere(x => x.AppUserId == request.UserId);
+            IQueryable<ShopList> Lists = _repository.GetWhere(x => x.AppUserId == request.UserId && x.IsDeleted == false);
             if (request.IsCompleted)
             {
                 Lists = Lists.Where(x => x.IsCompleted == true);
@@ -51,10 +52,10 @@ namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetShopList
                 HasNext = request.Page >= TotalPage ? false : true,
                 HasPrevious = request.Page == 1 ? false : true,
             };
-
-            return new GetShopListByUserQueryResponse()
+            //var a = Lists.Select(x => x.Categories).ToList();
+            return new GetAllShopListByUserQueryResponse()
             {
-                PagingInfo = PageInfo ,
+                PagingInfo = PageInfo,
                 Lists = Lists.Skip(Skip).Take(request.Limit).ToList()
             };
             //throw new NotImplementedException();

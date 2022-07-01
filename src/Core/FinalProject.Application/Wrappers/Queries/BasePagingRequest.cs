@@ -1,5 +1,4 @@
 ﻿
-
 namespace FinalProject.Application.Wrappers.Queries
 {
     public class BasePagingRequest

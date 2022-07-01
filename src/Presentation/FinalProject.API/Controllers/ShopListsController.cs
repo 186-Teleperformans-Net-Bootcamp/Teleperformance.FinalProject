@@ -1,4 +1,4 @@
-﻿using FinalProject.Application.Features.ShopListFeatures.Queries.GetShopListByUser;
+﻿using FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopListByUser;
 using FinalProject.Application.Features.ShopListFeatures.Commands.CreateShopList;
 using FinalProject.Application.Wrappers.Responses;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Text.Json;
 using MediatR;
+using FinalProject.Application.Features.ShopListFeatures.Commands.UpdateShopList;
+using FinalProject.Application.Features.ShopListFeatures.Commands.DeleteShopList;
 
 namespace FinalProject.API.Controllers
 {
@@ -22,13 +24,13 @@ namespace FinalProject.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetShopListByUser([FromQuery] GetShopListByUserQueryRequest request)
+        public async Task<IActionResult> GetAllShopListByUser([FromQuery] GetAllShopListByUserQueryRequest request)
         {
             ClaimsIdentity Identity = (ClaimsIdentity)HttpContext.User.Identity;
             request.UserId = Identity.Claims.FirstOrDefault(x => x.Type == "Id").Value;
-            GetShopListByUserQueryResponse response = await _mediator.Send(request);
+            GetAllShopListByUserQueryResponse response = await _mediator.Send(request);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(response.PagingInfo));
-            return Ok(response);
+            return Ok(response.Lists);
         }
 
         [HttpPost]
@@ -36,6 +38,23 @@ namespace FinalProject.API.Controllers
         {
             ClaimsIdentity Identity = (ClaimsIdentity)HttpContext.User.Identity;
             request.AppUserId = Identity.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+            BaseResponse response = await _mediator.Send(request);
+
+            return Ok(response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateShopList([FromBody] UpdateShopListCommandRequest request)
+        {
+            BaseResponse response = await _mediator.Send(request);
+
+            return Ok(response);
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeletedShopList([FromRoute] DeleteShopListCommandRequest request)
+        {
+
             BaseResponse response = await _mediator.Send(request);
 
             return Ok(response);
@@ -51,3 +70,19 @@ namespace FinalProject.API.Controllers
         }
     }
 }
+/*
+ 
+  path deneme
+
+ [Httppath("{Id}")]
+        public async Task<IActionResult> DeletedShopList([FromRoute] x(ıd) , [FromBody] y(jsonserliaz))
+        {
+            a =    x.Adapt<DeleteShopListCommandRequest>();
+            a =    y.Adapt<DeleteShopListCommandRequest>();
+            BaseResponse response = await _mediator.Send(a);
+
+            return Ok(response);
+        }
+
+ */
+//TODO Queryleri trendyol ashibinden vs bakarak isimleini düzenle

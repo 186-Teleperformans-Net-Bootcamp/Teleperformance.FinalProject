@@ -8,7 +8,8 @@ namespace FinalProject.Domain.Entities
     {
         public string Description { get; set; }
         public bool IsCompleted { get; set; }
-        
+        public bool IsDeleted { get; set; }
+
         public string AppUserId { get; set; }
         [ForeignKey("AppUserId")]
         public AppUser AppUser { get; set; }

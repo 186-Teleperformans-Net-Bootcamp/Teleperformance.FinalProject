@@ -8,22 +8,22 @@ namespace FinalProject.Application.Features.ProductFeatures.Commands.UpdateProdu
 {
     public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandRequest, BaseResponse>
     {
-        private readonly IProductCommandRepository _Commandrepository;
-        private readonly IProductQueryRepository _Queryrepository;
+        private readonly IProductCommandRepository _commandRepository;
+        private readonly IProductQueryRepository _queryRepository;
 
         public UpdateProductCommandHandler(IProductCommandRepository commandrepository, IProductQueryRepository queryrepository)
         {
-            _Commandrepository = commandrepository;
-            _Queryrepository = queryrepository;
+            _commandRepository = commandrepository;
+            _queryRepository = queryrepository;
         }
 
         public async Task<BaseResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
-            Product UpdatedProduct = await _Queryrepository.GetByIdAsync(request.Id);
+            Product UpdatedProduct = await _queryRepository.GetByIdAsync(request.Id);
             request.Adapt<UpdateProductCommandRequest, Product>(UpdatedProduct);
 
-            _Commandrepository.Update(UpdatedProduct);
-            await _Commandrepository.SaveAsync();
+            _commandRepository.Update(UpdatedProduct);
+            await _commandRepository.SaveAsync();
             BaseResponse response = new()
             {
                 Success = true,

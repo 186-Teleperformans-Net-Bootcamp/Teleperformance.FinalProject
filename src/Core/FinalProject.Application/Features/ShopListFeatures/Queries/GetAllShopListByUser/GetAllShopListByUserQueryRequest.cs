@@ -1,13 +1,12 @@
 ﻿using FinalProject.Application.Wrappers.Queries;
 using MediatR;
 
-
-namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetShopListByUser
+namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopListByUser
 {
-    public class GetShopListByUserQueryRequest : BasePagingRequest, IRequest<GetShopListByUserQueryResponse>
+    public class GetAllShopListByUserQueryRequest : BasePagingRequest, IRequest<GetAllShopListByUserQueryResponse>
     {
         public string? UserId { get; set; }
-        public string?  SearchByName { get; set; }
+        public string? SearchByName { get; set; }
 
         public DateTime? CreationRangeCeiling { get; set; }
         public DateTime? CreationRangeLower { get; set; }
