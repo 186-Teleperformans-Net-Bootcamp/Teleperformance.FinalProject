@@ -51,11 +51,11 @@ namespace FinalProject.Application.Features.CategoryFeatures.Queries.GetAllCateg
             };
 
             List<Category> CategoryList = Categories.Skip(Skip).Take(request.Limit).ToList();
-            List<GetCategoryDto> CategoryListDto = CategoryList.Adapt<List<GetCategoryDto>>();
+            List<GetCategoryDto> CategoryDtoList = CategoryList.Adapt<List<GetCategoryDto>>();
             return new GetAllCategoryByShopListQueryResponse()
             {
                 PagingInfo = PageInfo,
-                Categories = CategoryListDto
+                Categories = CategoryDtoList
             };
         }
     }

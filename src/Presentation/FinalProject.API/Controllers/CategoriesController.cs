@@ -6,10 +6,11 @@ using FinalProject.Application.Wrappers.Responses;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using MediatR;
+using FinalProject.Application.Features.CategoryFeatures.Queries.GetCategoryById;
 
 namespace FinalProject.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/categories")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
@@ -21,12 +22,19 @@ namespace FinalProject.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetShopListByUser([FromQuery] GetAllCategoryByShopListQueryRequest request)
+        public async Task<IActionResult> GetAllCategoryByShopList([FromQuery] GetAllCategoryByShopListQueryRequest request)
         {
 
             GetAllCategoryByShopListQueryResponse response = await _mediator.Send(request);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(response.PagingInfo));
             return Ok(response.Categories);
+        }
+
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetCategoryById([FromRoute] GetCategoryByIdQueryRequest request)
+        {
+            GetCategoryByIdQueryResponse response = await _mediator.Send(request);
+            return Ok(response.Category);
         }
 
         [HttpPost]
@@ -46,7 +54,7 @@ namespace FinalProject.API.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public async Task<IActionResult> DeleteProduct([FromRoute] DeleteCategoryCommandRequest request)
+        public async Task<IActionResult> DeleteCategory([FromRoute] DeleteCategoryCommandRequest request)
         {
             BaseResponse response = await _mediator.Send(request);
 

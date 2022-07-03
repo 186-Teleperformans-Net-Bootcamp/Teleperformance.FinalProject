@@ -4,23 +4,22 @@ using FinalProject.Application.Models.Paging;
 using FinalProject.Domain.Entities;
 using Mapster;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
-namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopListByUser
+namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopList
 {
-    public class GetAllShopListByUserQueryHandler : IRequestHandler<GetAllShopListByUserQueryRequest, GetAllShopListByUserQueryResponse>
+    public class GetAllShopListQueryHandler : IRequestHandler<GetAllShopListQueryRequest, GetAllShopListQueryResponse>
     {
         private readonly IShopListQueryRepository _repository;
 
-        public GetAllShopListByUserQueryHandler(IShopListQueryRepository repository)
+        public GetAllShopListQueryHandler(IShopListQueryRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<GetAllShopListByUserQueryResponse> Handle(GetAllShopListByUserQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GetAllShopListQueryResponse> Handle(GetAllShopListQueryRequest request, CancellationToken cancellationToken)
         {
 
-            IQueryable<ShopList> Lists = _repository.GetWhere(x => x.AppUserId == request.UserId && x.IsDeleted == false);
+            IQueryable<ShopList> Lists = _repository.GetAll();
             if (request.IsCompleted)
             {
                 Lists = Lists.Where(x => x.IsCompleted == true);
@@ -56,7 +55,7 @@ namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopL
             };
             List<ShopList> ShopLists = Lists.Skip(Skip).Take(request.Limit).ToList();
             List<GetShopListDto> ShopListDtoList = ShopLists.Adapt<List<GetShopListDto>>();
-            return new GetAllShopListByUserQueryResponse()
+            return new GetAllShopListQueryResponse()
             {
                 PagingInfo = PageInfo,
                 Lists = ShopListDtoList

@@ -6,10 +6,11 @@ using FinalProject.Application.Wrappers.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using FinalProject.Application.Features.ProductFeatures.Queries.GetProductById;
 
 namespace FinalProject.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/products")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -27,6 +28,14 @@ namespace FinalProject.API.Controllers
             GetAllProductByCategoryQueryResponse response = await _mediator.Send(request);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(response.PagingInfo));
             return Ok(response.Products);
+        }
+
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetProductById([FromRoute] GetProductByIdQueryRequest request)
+        {
+            GetProductByIdQueryResponse response = await _mediator.Send(request);
+            //Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(response.PagingInfo));
+            return Ok(response.Product);
         }
 
         [HttpPost]

@@ -1,9 +1,9 @@
 ﻿using FinalProject.Application.Wrappers.Queries;
 using MediatR;
 
-namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopListByUser
+namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopList
 {
-    public class GetAllShopListByUserQueryRequest : BasePagingRequest, IRequest<GetAllShopListByUserQueryResponse>
+    public class GetAllShopListQueryRequest : BasePagingRequest, IRequest<GetAllShopListQueryResponse>
     {
         public string? UserId { get; set; }
         public string? SearchByName { get; set; }

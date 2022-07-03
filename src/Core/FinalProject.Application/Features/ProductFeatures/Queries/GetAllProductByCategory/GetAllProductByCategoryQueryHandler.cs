@@ -51,11 +51,11 @@ namespace FinalProject.Application.Features.ProductFeatures.Queries.GetAllProduc
             };
 
             List<Product> ProductList = Products.Skip(Skip).Take(request.Limit).ToList();
-            List<GetProductDto> ProductListDto = ProductList.Adapt<List<GetProductDto>>();
+            List<GetProductDto> ProductDtoList = ProductList.Adapt<List<GetProductDto>>();
             return new GetAllProductByCategoryQueryResponse()
             {
                 PagingInfo = PageInfo,
-                Products = ProductListDto
+                Products = ProductDtoList
             };
         }
     }

@@ -8,11 +8,13 @@ using System.Text.Json;
 using MediatR;
 using FinalProject.Application.Features.ShopListFeatures.Commands.UpdateShopList;
 using FinalProject.Application.Features.ShopListFeatures.Commands.DeleteShopList;
+using FinalProject.Application.Features.ShopListFeatures.Queries.GetShopListById;
+using FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopList;
 
 namespace FinalProject.API.Controllers
 {
-    [Authorize(Roles = "User")]
-    [Route("api/MyLists")]
+    [Authorize(Roles = "User,Admin")]
+    [Route("api/mylists")]
     [ApiController]
     public class ShopListsController : ControllerBase
     {
@@ -31,6 +33,14 @@ namespace FinalProject.API.Controllers
             GetAllShopListByUserQueryResponse response = await _mediator.Send(request);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(response.PagingInfo));
             return Ok(response.Lists);
+        }
+
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetShopListById([FromRoute] GetShopListByIdQueryRequest request)
+        {
+            GetShopListByIdQueryResponse response = await _mediator.Send(request);
+            //Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(response.PagingInfo));
+            return Ok(response.ShopList);
         }
 
         [HttpPost]
@@ -61,12 +71,12 @@ namespace FinalProject.API.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("AllLists")]
-        public async Task<IActionResult> Get()
+        [HttpGet("admin/lists-of-all-user")]
+        public async Task<IActionResult> GetAllShopList([FromQuery] GetAllShopListQueryRequest request)
         {
+            GetAllShopListQueryResponse response = await _mediator.Send(request);
 
-
-            return Ok("admin hg gardaş");
+            return Ok(response);
         }
     }
 }

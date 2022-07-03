@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProject.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/accounts")]
     [ApiController]
     public class AccountsController : ControllerBase
     {
