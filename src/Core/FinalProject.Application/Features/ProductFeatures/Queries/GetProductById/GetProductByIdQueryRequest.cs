@@ -4,6 +4,6 @@ namespace FinalProject.Application.Features.ProductFeatures.Queries.GetProductBy
 {
     public class GetProductByIdQueryRequest : IRequest<GetProductByIdQueryResponse>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

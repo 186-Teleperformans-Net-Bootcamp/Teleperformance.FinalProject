@@ -2,11 +2,11 @@
 using FinalProject.Application.Features.ProductFeatures.Commands.CreateProduct;
 using FinalProject.Application.Features.ProductFeatures.Commands.DeleteProduct;
 using FinalProject.Application.Features.ProductFeatures.Commands.UpdateProduct;
+using FinalProject.Application.Features.ProductFeatures.Queries.GetProductById;
 using FinalProject.Application.Wrappers.Responses;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using FinalProject.Application.Features.ProductFeatures.Queries.GetProductById;
+using MediatR;
 
 namespace FinalProject.API.Controllers
 {
@@ -34,31 +34,27 @@ namespace FinalProject.API.Controllers
         public async Task<IActionResult> GetProductById([FromRoute] GetProductByIdQueryRequest request)
         {
             GetProductByIdQueryResponse response = await _mediator.Send(request);
-            //Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(response.PagingInfo));
             return Ok(response.Product);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct([FromBody]CreateProductCommandRequest request)
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommandRequest request)
         {
-            BaseResponse response = await _mediator.Send(request);
-
+            CreateProductCommandResponse response = await _mediator.Send(request);
             return Ok(response);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateProduct([FromBody]UpdateProductCommandRequest request)
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductCommandRequest request)
         {
             BaseResponse response = await _mediator.Send(request);
-
             return Ok(response);
         }
 
         [HttpDelete("{Id}")]
-        public async Task<IActionResult> DeleteProduct([FromRoute]DeleteProductCommandRequest request)
+        public async Task<IActionResult> DeleteProduct([FromRoute] DeleteProductCommandRequest request)
         {
             BaseResponse response = await _mediator.Send(request);
-
             return Ok(response);
         }
     }

@@ -20,7 +20,7 @@ namespace FinalProject.Application.Features.ShopListFeatures.Commands.UpdateShop
 
         public async Task<BaseResponse> Handle(UpdateShopListCommandRequest request, CancellationToken cancellationToken)
         {
-            ShopList UpdatedShopList = await _queryRepository.GetByIdAsync(request.Id);
+            ShopList UpdatedShopList = await _queryRepository.GetByIdAsync(request.Id.ToString());
             request.Adapt<UpdateShopListCommandRequest, ShopList>(UpdatedShopList);
 
             _commandRepository.Update(UpdatedShopList);

@@ -19,7 +19,7 @@ namespace FinalProject.Application.Features.CategoryFeatures.Commands.DeleteCate
 
         public async Task<BaseResponse> Handle(DeleteCategoryCommandRequest request, CancellationToken cancellationToken)
         {
-            Category DeletedCategory = await _queryRepository.GetByIdAsync(request.Id);
+            Category DeletedCategory = await _queryRepository.GetByIdAsync(request.Id.ToString());
 
             _commandRepository.Remove(DeletedCategory);
             _commandRepository.SaveAsync();

@@ -5,7 +5,7 @@ namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopL
 {
     public class GetAllShopListQueryRequest : BasePagingRequest, IRequest<GetAllShopListQueryResponse>
     {
-        public string? UserId { get; set; }
+        public Guid? UserId { get; set; }
         public string? SearchByName { get; set; }
         public DateTime? CreationRangeCeiling { get; set; }
         public DateTime? CreationRangeLower { get; set; }

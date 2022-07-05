@@ -37,7 +37,7 @@ namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopL
 
             if (request.UpdateRangeCeiling.HasValue || request.UpdateRangeLower.HasValue)
             {
-                Lists = Lists.Where(x => x.CreationDate <= request.UpdateRangeCeiling && x.CreationDate >= request.CreationRangeLower);
+                Lists = Lists.Where(x => x.UpdateDate <= request.UpdateRangeCeiling && x.UpdateDate >= request.CreationRangeLower);
             }
 
             int TotalUser = Lists.Count();

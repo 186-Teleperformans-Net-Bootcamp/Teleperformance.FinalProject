@@ -5,12 +5,12 @@ namespace FinalProject.Application.Interfaces.Repositories.Common
 {
     public interface ICommandRepository<T> : IRepository<T> where T : BaseEntity
     {
-        Task AddAsync(T model);
-        Task AddMultipleAsync(List<T> datas);
-        void Remove(T model);
-        void RemoveMultiple(List<T> datas);
-        Task RemoveByIdAsync(string id);
-        void Update(T model);
+        Task<bool> AddAsync(T model);
+        Task<bool> AddMultipleAsync(List<T> datas);
+        bool Remove(T model);
+        bool RemoveMultiple(List<T> datas);
+        Task<bool> RemoveByIdAsync(string id);
+        bool Update(T model);
 
         Task SaveAsync();
     }

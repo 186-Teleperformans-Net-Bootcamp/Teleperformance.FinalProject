@@ -17,7 +17,7 @@ namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetShopList
 
         public async Task<GetShopListByIdQueryResponse> Handle(GetShopListByIdQueryRequest request, CancellationToken cancellationToken)
         {
-            ShopList ShopList = await _repository.GetByIdAsync(request.Id);
+            ShopList ShopList = await _repository.GetByIdAsync(request.Id.ToString());
             GetShopListDto ShopListDto = ShopList.Adapt<GetShopListDto>();
 
             return new GetShopListByIdQueryResponse()

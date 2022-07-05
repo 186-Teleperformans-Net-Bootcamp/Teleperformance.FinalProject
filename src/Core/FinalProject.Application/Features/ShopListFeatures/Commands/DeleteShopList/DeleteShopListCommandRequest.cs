@@ -5,6 +5,6 @@ namespace FinalProject.Application.Features.ShopListFeatures.Commands.DeleteShop
 {
     public class DeleteShopListCommandRequest : IRequest<BaseResponse>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

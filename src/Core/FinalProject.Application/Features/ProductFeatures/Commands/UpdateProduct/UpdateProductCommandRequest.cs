@@ -6,11 +6,10 @@ namespace FinalProject.Application.Features.ProductFeatures.Commands.UpdateProdu
 {
     public class UpdateProductCommandRequest :IRequest<BaseResponse>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public float Quantity { get; set; }
         public MeasurementType MeasurementType { get; set; }
         public bool IsPurchased { get; set; }
-        //public string? CategoryId { get; set; }
     }
 }

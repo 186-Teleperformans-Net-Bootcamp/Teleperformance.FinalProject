@@ -18,35 +18,40 @@ namespace FinalProject.Persistence.Repositories.Common
 
         public DbSet<T> Table => _context.Set<T>();
 
-        public async Task AddAsync(T model)
+        public async Task<bool> AddAsync(T model)
         {
-            await Table.AddAsync(model);
+            EntityEntry<T> entity = await Table.AddAsync(model);
+            return entity.State == EntityState.Added;
         }
 
-        public async Task AddMultipleAsync(List<T> models)
+        public async Task<bool> AddMultipleAsync(List<T> models)
         {
             await Table.AddRangeAsync(models);
+            return true;
         }
 
-        public void Remove(T model)
+        public bool Remove(T model)
         {
-            Table.Remove(model);
+            EntityEntry<T> entity = Table.Remove(model);
+            return entity.State == EntityState.Deleted;
         }
 
-        public async Task RemoveByIdAsync(string id)
+        public async Task<bool> RemoveByIdAsync(string id)
         {
             T model = await Table.FindAsync(Guid.Parse(id));
-            Remove(model);//TODO buralara exeption koy
+            return Remove(model);//TODO buralara exeption koy
         }
 
-        public void RemoveMultiple(List<T> models)
+        public bool RemoveMultiple(List<T> models)
         {
             Table.RemoveRange(models);
+            return true;
         }
 
-        public void Update(T model)
+        public bool Update(T model)
         {
-            Table.Update(model);
+            EntityEntry entity = Table.Update(model);
+            return entity.State == EntityState.Modified;
         }
 
         public async Task SaveAsync()

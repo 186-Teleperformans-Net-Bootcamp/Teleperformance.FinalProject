@@ -4,6 +4,6 @@ namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetShopList
 {
     public class GetShopListByIdQueryRequest : IRequest<GetShopListByIdQueryResponse>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

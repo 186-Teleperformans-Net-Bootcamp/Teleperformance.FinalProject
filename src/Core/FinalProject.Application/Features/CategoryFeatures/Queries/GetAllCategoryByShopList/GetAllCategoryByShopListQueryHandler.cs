@@ -33,7 +33,7 @@ namespace FinalProject.Application.Features.CategoryFeatures.Queries.GetAllCateg
 
             if (request.UpdateRangeCeiling.HasValue || request.UpdateRangeLower.HasValue)
             {
-                Categories = Categories.Where(x => x.CreationDate <= request.UpdateRangeCeiling && x.CreationDate >= request.CreationRangeLower);
+                Categories = Categories.Where(x => x.UpdateDate <= request.UpdateRangeCeiling && x.UpdateDate >= request.UpdateRangeLower);
             }
 
             int TotalUser = Categories.Count();

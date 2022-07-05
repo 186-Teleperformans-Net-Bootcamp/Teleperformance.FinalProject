@@ -19,7 +19,7 @@ namespace FinalProject.Application.Features.ProductFeatures.Commands.UpdateProdu
 
         public async Task<BaseResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
-            Product UpdatedProduct = await _queryRepository.GetByIdAsync(request.Id);
+            Product UpdatedProduct = await _queryRepository.GetByIdAsync(request.Id.ToString());
             request.Adapt<UpdateProductCommandRequest, Product>(UpdatedProduct);
 
             _commandRepository.Update(UpdatedProduct);

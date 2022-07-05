@@ -5,7 +5,10 @@ namespace FinalProject.Application.Features.ProductFeatures.Queries.GetAllProduc
 {
     public class GetAllProductByCategoryQueryResponse
     {
+        [System.Text.Json.Serialization.JsonPropertyName("products")]
         public List<GetProductDto> Products { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("pagingInfo")]
         public PagingInfo PagingInfo { get; set; }
+
     }
 }

@@ -4,6 +4,6 @@ namespace FinalProject.Application.Features.CategoryFeatures.Queries.GetCategory
 {
     public class GetCategoryByIdQueryRequest : IRequest<GetCategoryByIdQueryResponse>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

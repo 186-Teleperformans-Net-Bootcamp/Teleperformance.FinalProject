@@ -5,7 +5,7 @@ namespace FinalProject.Application.Features.CategoryFeatures.Commands.UpdateCate
 {
     public class UpdateCategoryCommandRequest : IRequest<BaseResponse>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }

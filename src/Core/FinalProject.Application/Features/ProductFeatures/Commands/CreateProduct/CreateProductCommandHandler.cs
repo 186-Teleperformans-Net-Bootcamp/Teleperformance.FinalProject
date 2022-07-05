@@ -1,13 +1,11 @@
-﻿using FinalProject.Application.Features.ProductFeatures.Commands.CreateProduct;
-using FinalProject.Application.Interfaces.Repositories.ProductRepositories;
-using FinalProject.Application.Wrappers.Responses;
+﻿using FinalProject.Application.Interfaces.Repositories.ProductRepositories;
 using FinalProject.Domain.Entities;
 using Mapster;
 using MediatR;
 
 namespace FinalProject.Application.Features.ProductFeatures.Commands.CreateProduct
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, BaseResponse>
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, CreateProductCommandResponse>
     {
         private readonly IProductCommandRepository _repository;
 
@@ -16,18 +14,20 @@ namespace FinalProject.Application.Features.ProductFeatures.Commands.CreateProdu
             _repository = repository;
         }
 
-        public async Task<BaseResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
+        public async Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
         {
             Product NewProduct = request.Adapt<Product>();
-            await _repository.AddAsync(NewProduct);
+            bool result = await _repository.AddAsync(NewProduct);
             await _repository.SaveAsync();
-            BaseResponse response = new()
+            CreateProductCommandResponse response = new();
+
+            if (result)
             {
-                Success = true,
-                Message = "Product Added"
-            };
+                response.NewProductId = NewProduct.Id;
+                response.Success = true;
+                response.Message = "Product Added";
+            }
             return response;
         }
-
     }
 }

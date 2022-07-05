@@ -40,7 +40,7 @@ namespace FinalProject.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommandRequest request)
         {
-            BaseResponse response = await _mediator.Send(request);
+            CreateCategoryCommandResponse response = await _mediator.Send(request);
 
             return Ok(response);
         }

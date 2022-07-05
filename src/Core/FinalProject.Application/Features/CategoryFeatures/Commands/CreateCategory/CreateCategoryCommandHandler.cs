@@ -6,7 +6,7 @@ using MediatR;
 
 namespace FinalProject.Application.Features.CategoryFeatures.Commands.CreateCategory
 {
-    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommandRequest, BaseResponse>
+    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommandRequest, CreateCategoryCommandResponse>
     {
         private readonly ICategoryCommandRepository _repository;
 
@@ -15,19 +15,20 @@ namespace FinalProject.Application.Features.CategoryFeatures.Commands.CreateCate
             _repository = repository;
         }
 
-        public async Task<BaseResponse> Handle(CreateCategoryCommandRequest request, CancellationToken cancellationToken)
+        public async Task<CreateCategoryCommandResponse> Handle(CreateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
-            Category NewCategory= request.Adapt<Category>();
-            await _repository.AddAsync(NewCategory);
+            Category NewCategory = request.Adapt<Category>();
+            bool result = await _repository.AddAsync(NewCategory);
             await _repository.SaveAsync();
+            CreateCategoryCommandResponse response = new();
 
-            BaseResponse response = new()
+            if (result)
             {
-                Success = true,
-                Message = "Category Added"
-            };
+                response.NewCategoryId = NewCategory.Id;
+                response.Success = true;
+                response.Message = "Category Added";
+            }
             return response;
-            throw new NotImplementedException();
         }
     }
 }

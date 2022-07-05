@@ -29,7 +29,7 @@ namespace FinalProject.API.Controllers
         public async Task<IActionResult> GetAllShopListByUser([FromQuery] GetAllShopListByUserQueryRequest request)
         {
             ClaimsIdentity Identity = (ClaimsIdentity)HttpContext.User.Identity;
-            request.UserId = Identity.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+            request.UserId = Guid.Parse(Identity.Claims.FirstOrDefault(x => x.Type == "Id").Value) ;
             GetAllShopListByUserQueryResponse response = await _mediator.Send(request);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(response.PagingInfo));
             return Ok(response.Lists);
@@ -47,7 +47,7 @@ namespace FinalProject.API.Controllers
         public async Task<IActionResult> CreateShopList(CreateShopListCommandRequest request)
         {
             ClaimsIdentity Identity = (ClaimsIdentity)HttpContext.User.Identity;
-            request.AppUserId = Identity.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+            request.AppUserId = Guid.Parse(Identity.Claims.FirstOrDefault(x => x.Type == "Id").Value);
             BaseResponse response = await _mediator.Send(request);
 
             return Ok(response);

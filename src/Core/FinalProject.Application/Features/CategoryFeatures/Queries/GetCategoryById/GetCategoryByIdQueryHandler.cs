@@ -17,7 +17,7 @@ namespace FinalProject.Application.Features.CategoryFeatures.Queries.GetCategory
 
         public async Task<GetCategoryByIdQueryResponse> Handle(GetCategoryByIdQueryRequest request, CancellationToken cancellationToken)
         {
-            Category Category = await _repository.GetByIdAsync(request.Id);
+            Category Category = await _repository.GetByIdAsync(request.Id.ToString());
             GetCategoryDto CategoryDto = Category.Adapt<GetCategoryDto>();
 
             return new GetCategoryByIdQueryResponse()

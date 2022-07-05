@@ -14,7 +14,7 @@ namespace FinalProject.Persistence
 {
     public static class PersistenceServiceRegistration
     {
-        public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
+        public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration, string enviroment = "Development")
         {
             //services.AddDbContext<MsSqlDbContext>(options =>
             //    options.UseSqlServer(configuration.GetConnectionString("MsSqlConnection")));
@@ -26,9 +26,13 @@ namespace FinalProject.Persistence
             //    options.Password.RequireLowercase = false;
             //    options.Password.RequireUppercase = false;
             //}).AddEntityFrameworkStores<MsSqlDbContext>();
+            if(enviroment == "Test")
+                services.AddDbContext<PostgreSqlDbContext>(options =>
+                    options.UseInMemoryDatabase("TestDatabase"));
+            else
+                services.AddDbContext<PostgreSqlDbContext>(options =>
+                    options.UseNpgsql(configuration.GetConnectionString("PosgreSqlConnection")));
 
-            services.AddDbContext<PostgreSqlDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("PosgreSqlConnection")));
             services.AddIdentity<AppUser, AppRole>(options =>
             {
                 options.Password.RequiredLength = 3;

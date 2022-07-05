@@ -20,7 +20,7 @@ namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopL
         public async Task<GetAllShopListByUserQueryResponse> Handle(GetAllShopListByUserQueryRequest request, CancellationToken cancellationToken)
         {
 
-            IQueryable<ShopList> Lists = _repository.GetWhere(x => x.AppUserId == request.UserId && x.IsDeleted == false);
+            IQueryable<ShopList> Lists = _repository.GetWhere(x => x.AppUserId == request.UserId.ToString() && x.IsDeleted == false);
             if (request.IsCompleted)
             {
                 Lists = Lists.Where(x => x.IsCompleted == true);
@@ -38,7 +38,7 @@ namespace FinalProject.Application.Features.ShopListFeatures.Queries.GetAllShopL
 
             if (request.UpdateRangeCeiling.HasValue || request.UpdateRangeLower.HasValue)
             {
-                Lists = Lists.Where(x => x.CreationDate <= request.UpdateRangeCeiling && x.CreationDate >= request.CreationRangeLower);
+                Lists = Lists.Where(x => x.UpdateDate <= request.UpdateRangeCeiling && x.UpdateDate >= request.CreationRangeLower);
             }
 
             int TotalUser = Lists.Count();

@@ -5,6 +5,6 @@ namespace FinalProject.Application.Features.ProductFeatures.Commands.DeleteProdu
 {
     public class DeleteProductCommandRequest : IRequest<BaseResponse>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

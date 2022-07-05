@@ -18,7 +18,7 @@ namespace FinalProject.Application.Features.ShopListFeatures.Commands.DeleteShop
 
         public async Task<BaseResponse> Handle(DeleteShopListCommandRequest request, CancellationToken cancellationToken)
         {
-            ShopList DeletedList = await _queryRepository.GetByIdAsync(request.Id);
+            ShopList DeletedList = await _queryRepository.GetByIdAsync(request.Id.ToString());
 
             DeletedList.IsDeleted = true;
             _commandRepository.SaveAsync();

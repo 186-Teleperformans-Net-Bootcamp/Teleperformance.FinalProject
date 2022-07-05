@@ -19,7 +19,7 @@ namespace FinalProject.Application.Features.CategoryFeatures.Commands.UpdateCate
 
         public async Task<BaseResponse> Handle(UpdateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
-            Category UpdatedCategory = await _queryRepository.GetByIdAsync(request.Id);
+            Category UpdatedCategory = await _queryRepository.GetByIdAsync(request.Id.ToString());
             request.Adapt<UpdateCategoryCommandRequest, Category>(UpdatedCategory);
 
             _commandRepository.Update(UpdatedCategory);

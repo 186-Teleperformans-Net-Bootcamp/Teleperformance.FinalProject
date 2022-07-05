@@ -33,7 +33,7 @@ namespace FinalProject.Application.Features.ProductFeatures.Queries.GetAllProduc
 
             if (request.UpdateRangeCeiling.HasValue || request.UpdateRangeLower.HasValue)
             {
-                Products = Products.Where(x => x.CreationDate <= request.UpdateRangeCeiling && x.CreationDate >= request.CreationRangeLower);
+                Products = Products.Where(x => x.UpdateDate <= request.UpdateRangeCeiling && x.UpdateDate >= request.CreationRangeLower);
             }
 
             int TotalUser = Products.Count();

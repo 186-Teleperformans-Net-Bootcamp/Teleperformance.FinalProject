@@ -5,6 +5,6 @@ namespace FinalProject.Application.Features.CategoryFeatures.Commands.DeleteCate
 {
     public class DeleteCategoryCommandRequest : IRequest<BaseResponse>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

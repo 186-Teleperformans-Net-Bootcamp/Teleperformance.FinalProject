@@ -19,7 +19,7 @@ namespace FinalProject.Application.Features.ProductFeatures.Commands.DeleteProdu
         public async Task<BaseResponse> Handle(DeleteProductCommandRequest request, CancellationToken cancellationToken)
         {
 
-            Product DeletedProduct = await _queryRepository.GetByIdAsync(request.Id);
+            Product DeletedProduct = await _queryRepository.GetByIdAsync(request.Id.ToString());
             _commandRepository.Remove(DeletedProduct);
             _commandRepository.SaveAsync();
             BaseResponse response = new()
