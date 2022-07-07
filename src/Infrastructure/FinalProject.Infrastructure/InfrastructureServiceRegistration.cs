@@ -1,11 +1,12 @@
 ﻿using FinalProject.Application.Interfaces.Services;
-using FinalProject.Infrastructure.Services;
+using FinalProject.Application.Interfaces.Services.RabbitMQService;
+using FinalProject.Infrastructure.Services.ConsumerServices;
+using FinalProject.Infrastructure.Services.EventService;
+using FinalProject.Infrastructure.Services.TokenService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Linq;
 using System.Text;
 
 namespace FinalProject.Infrastructure
@@ -15,6 +16,8 @@ namespace FinalProject.Infrastructure
         public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IGenerateToken, GenerateToken>();
+            services.AddTransient<IRabbitMqPublisher, RabbitMqPublisher>();
+            services.AddHostedService<ShopListReporter>();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -25,30 +28,14 @@ namespace FinalProject.Infrastructure
                 {
                     options.TokenValidationParameters = new()
                     {
-                        ValidateAudience = false, //Oluşturulacak token değerini kimlerin/hangi originlerin/sitelerin kullanıcı belirlediğimiz değerdir. -> www.bilmemne.com
-                        ValidateIssuer = false, //Oluşturulacak token değerini kimin dağıttını ifade edeceğimiz alandır. -> www.myapi.com
-                        ValidateLifetime = true, //Oluşturulan token değerinin süresini kontrol edecek olan doğrulamadır.
-                        ValidateIssuerSigningKey = true, //Üretilecek token değerinin uygulamamıza ait bir değer olduğunu ifade eden suciry key verisinin doğrulanmasıdır.
-
-                        //  ValidAudience = configuration["Token:Audience"],
-                        //ValidIssuer = configuration["Token:Issuer"],
+                        ValidateAudience = false,
+                        ValidateIssuer = false, 
+                        ValidateLifetime = true, 
+                        ValidateIssuerSigningKey = true, 
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:SecurityKey"]))
                     };
                 });
-            //.AddJwtBearer("User", options =>
-            // {
-            //     options.TokenValidationParameters = new()
-            //     {
-            //         ValidateAudience = true, //Oluşturulacak token değerini kimlerin/hangi originlerin/sitelerinkullanıcı      belirlediğimiz değerdir. -> www.bilmemne.com
-            //         ValidateIssuer = true, //Oluşturulacak token değerini kimin dağıttını ifade edeceğimiz alandır. ->   www.myapi.com
-            //         ValidateLifetime = true, //Oluşturulan token değerinin süresini kontrol edecek olan doğrulamadır.
-            //         ValidateIssuerSigningKey = true, //Üretilecek token değerinin uygulamamıza ait bir değer olduğunu ifade eden   suciry key verisinin doğrulanmasıdır.
 
-            //         ValidAudience = configuration["Token:Audience"],
-            //         ValidIssuer = configuration["Token:Issuer"],
-            //         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:SecurityKey"]))
-            //     };
-            // });
 
         }
 

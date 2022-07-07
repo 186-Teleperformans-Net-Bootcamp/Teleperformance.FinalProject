@@ -22,15 +22,15 @@ namespace FinalProject.Application.Features.UserFeatures.Commands.CheckUser
 
         public async Task<CheckUserCommandResponse> Handle(CheckUserCommandRequest request, CancellationToken cancellationToken)
         {
-            AppUser user = await _userManager.FindByNameAsync(request.UsernameOrEmail);
+            AppUser user = await _userManager.FindByNameAsync(request.Username);
             if (user == null)
-                user = await _userManager.FindByEmailAsync(request.UsernameOrEmail);
+                user = await _userManager.FindByEmailAsync(request.Username);
 
             if (user == null)
                 throw new Exception();
 
             SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-            if (result.Succeeded) //Authentication başarılı!
+            if (result.Succeeded)
             {
                 var roles = await _userManager.GetRolesAsync(user);
                 List<Claim> claims = new List<Claim>();
@@ -46,11 +46,7 @@ namespace FinalProject.Application.Features.UserFeatures.Commands.CheckUser
                     Token = token
                 };
             }
-            //return new LoginUserErrorCommandResponse()
-            //{
-            //    Message = "Kullanıcı adı veya şifre hatalı..."
-            //};
-            throw new Exception();
+                throw new NotImplementedException();
         }
     }
 }

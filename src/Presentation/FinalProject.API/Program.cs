@@ -13,11 +13,11 @@ builder.Services.AddPersistenceServices(builder.Configuration, builder.Environme
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
-builder.Services.AddSwaggerGen(options =>
+builder.Services.AddSwaggerGen(options =>//Swagger arayüzünde Authentication kullanabilmek için arayüz ekliyoruz.
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
-        Description = "burasý scheme (\"bearer {token}\")",
+        Description = "ATTEMPT (\"bearer {token}\")",
         In = ParameterLocation.Header,
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey

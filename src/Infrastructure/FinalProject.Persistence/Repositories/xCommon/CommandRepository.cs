@@ -4,7 +4,6 @@ using FinalProject.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-
 namespace FinalProject.Persistence.Repositories.Common
 {
     public class CommandRepository<T> : ICommandRepository<T> where T : BaseEntity
@@ -39,7 +38,7 @@ namespace FinalProject.Persistence.Repositories.Common
         public async Task<bool> RemoveByIdAsync(string id)
         {
             T model = await Table.FindAsync(Guid.Parse(id));
-            return Remove(model);//TODO buralara exeption koy
+            return Remove(model);
         }
 
         public bool RemoveMultiple(List<T> models)

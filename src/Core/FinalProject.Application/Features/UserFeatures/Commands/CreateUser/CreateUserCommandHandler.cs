@@ -18,6 +18,7 @@ namespace FinalProject.Application.Features.UserFeatures.Commands.CreateUser
 
         public async Task<BaseResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
+            //Veritabanına ilk kez admin ve user rollerini vermek için kullanıyoruz.
             //await _roleManager.CreateAsync(new AppRole { Id = "sdfsdfsfs", Name = "Admin" });
             //await _roleManager.CreateAsync(new AppRole { Id = "dfsdffsf", Name = "User" });
             AppUser NewUser = new()
@@ -29,10 +30,7 @@ namespace FinalProject.Application.Features.UserFeatures.Commands.CreateUser
                 Email = request.Email,
                 RegistrationDate = DateTime.UtcNow,
             };
-            //if(request.IsAdmin)
-            //{
-            //    await _userManager.AddToRoleAsync(NewUser, "Admin");
-            //}
+            
             IdentityResult result = await _userManager.CreateAsync(NewUser, request.Password);
             await _userManager.AddToRoleAsync(NewUser, "User");
 
@@ -40,10 +38,7 @@ namespace FinalProject.Application.Features.UserFeatures.Commands.CreateUser
 
             if (result.Succeeded)
                 response.Message = "Kullanıcı başarıyla oluşturulmuştur.";
-            else
-                foreach (var error in result.Errors)
-                    response.Message += $"{error.Code} - {error.Description}\n";
-
+           
             return response;
         }
     }

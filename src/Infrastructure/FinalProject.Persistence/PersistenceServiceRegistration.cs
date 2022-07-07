@@ -16,22 +16,20 @@ namespace FinalProject.Persistence
     {
         public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration, string enviroment = "Development")
         {
-            //services.AddDbContext<MsSqlDbContext>(options =>
-            //    options.UseSqlServer(configuration.GetConnectionString("MsSqlConnection")));
-            //services.AddIdentity<AppUser, AppRole>(options =>
-            //{
-            //    options.Password.RequiredLength = 3;
-            //    options.Password.RequireNonAlphanumeric = false;
-            //    options.Password.RequireDigit = false;
-            //    options.Password.RequireLowercase = false;
-            //    options.Password.RequireUppercase = false;
-            //}).AddEntityFrameworkStores<MsSqlDbContext>();
-            if(enviroment == "Test")
+            if (enviroment == "Test")
+            {
                 services.AddDbContext<PostgreSqlDbContext>(options =>
-                    options.UseInMemoryDatabase("TestDatabase"));
+                    options.UseInMemoryDatabase("TestDatabasePostgre"));
+                services.AddDbContext<MsSqlDbContext>(options =>
+               options.UseInMemoryDatabase("TestDatabaseMs"), ServiceLifetime.Singleton);
+            }
             else
+            {
                 services.AddDbContext<PostgreSqlDbContext>(options =>
                     options.UseNpgsql(configuration.GetConnectionString("PosgreSqlConnection")));
+                services.AddDbContext<MsSqlDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("MsSqlConnection")), ServiceLifetime.Singleton);
+            }
 
             services.AddIdentity<AppUser, AppRole>(options =>
             {
@@ -46,6 +44,8 @@ namespace FinalProject.Persistence
             services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
             services.AddScoped<IShopListCommandRepository, ShopListCommandRepository>();
             services.AddScoped<IShopListQueryRepository, ShopListQueryRepository>();
+            services.AddSingleton<IShopListCommandArchiveRepository, ShopListCommandArchiveRepository>();
+            services.AddScoped<IShopListQueryArchiveRepository, ShopListQueryArchiveRepository>();
             services.AddScoped<ICategoryCommandRepository, CategoryCommandRepository>();
             services.AddScoped<ICategoryQueryRepository, CategoryQueryRepository>();
         }

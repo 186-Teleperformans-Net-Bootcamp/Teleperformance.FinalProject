@@ -104,6 +104,3 @@ namespace Teleperformance.FinalProject.Tests.IntegrationTests
     }
 }
 
-
-//TODO query lere eklediğin değişken isimleri büyük harfle olmasın
-//TODO 2. INTEGRASYON TESTİNİ DÜŞÜN

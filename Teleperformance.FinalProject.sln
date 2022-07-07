@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject.API", "src\Pre
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AF2D8F4C-73D8-4737-BFBC-3C9ED05B5CBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teleperformance.FinalProject.Tests", "Teleperformance.FinalProject.Tests\Teleperformance.FinalProject.Tests.csproj", "{D48CA654-209D-4A68-974C-244883A80339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teleperformance.FinalProject.Tests", "Teleperformance.FinalProject.Tests\Teleperformance.FinalProject.Tests.csproj", "{D48CA654-209D-4A68-974C-244883A80339}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

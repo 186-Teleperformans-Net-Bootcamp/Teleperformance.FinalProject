@@ -9,7 +9,7 @@ namespace FinalProject.Application.Features.UserFeatures.Commands.CheckUser
 {
     public class CheckUserCommandRequest: IRequest<CheckUserCommandResponse>
     {
-        public string UsernameOrEmail { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
     }
 }

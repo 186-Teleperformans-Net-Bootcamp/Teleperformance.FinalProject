@@ -6,5 +6,6 @@ namespace FinalProject.Application.Interfaces.Repositories.ShopListRepositories
 {
     public interface IShopListCommandRepository : ICommandRepository<ShopList>
     {
+
     }
 }

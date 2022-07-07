@@ -15,26 +15,26 @@ namespace FinalProject.Persistence.Repositories.Common
         {
             _context = context;
         }
-        DbSet<T> IRepository<T>.Table => throw new NotImplementedException();//TODO burdada exception eklenecek
+        DbSet<T> IRepository<T>.Table => throw new NotImplementedException();
 
         public DbSet<T> Table => _context.Set<T>();
 
-        public IQueryable<T> GetAll(bool tracking = true)
+        public IQueryable<T> GetAll()
         {
 
-            return Table.AsNoTracking();
+            return Table;
         }
 
-        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> expression, bool tracking = true)
+        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> expression)
         {
             return await Table.FirstOrDefaultAsync(expression);
         }
-        public IQueryable<T> GetWhere(Expression<Func<T, bool>> expression, bool tracking = true)
+        public IQueryable<T> GetWhere(Expression<Func<T, bool>> expression)
         {
             return Table.Where(expression);
 
         }
-        public async Task<T> GetByIdAsync(string id, bool tracking = true)
+        public async Task<T> GetByIdAsync(string id)
         {
             return await Table.FindAsync(Guid.Parse(id));
         }

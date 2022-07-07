@@ -4,9 +4,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace FinalProject.Persistence.Migrations
+namespace FinalProject.Persistence.Migrations.PostgreSql
 {
-    public partial class migg_1 : Migration
+    public partial class FirstMig_1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -166,6 +166,7 @@ namespace FinalProject.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     IsCompleted = table.Column<bool>(type: "boolean", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     AppUserId = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),

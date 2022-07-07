@@ -31,9 +31,7 @@ namespace Teleperformance.FinalProject.Tests.UnitTests.ProductTests
                 UpdateDate = DateTime.Now
             };
             var mockRepo = new Mock<IProductCommandRepository>();
-            mockRepo.Setup(c => c.AddAsync(product)).ReturnsAsync(true);
-            mockRepo.Setup(c => c.SaveAsync());
-
+            mockRepo.Setup(c => c.AddAsync(It.IsAny<Product>())).ReturnsAsync(true);
             var command = new CreateProductCommandHandler(mockRepo.Object);
 
             CreateProductCommandResponse response = await command.Handle(productRequest, CancellationToken.None);

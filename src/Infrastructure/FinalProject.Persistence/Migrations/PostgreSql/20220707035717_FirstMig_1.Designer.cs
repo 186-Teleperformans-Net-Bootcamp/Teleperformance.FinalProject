@@ -3,17 +3,19 @@ using System;
 using FinalProject.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace FinalProject.Persistence.Migrations
+namespace FinalProject.Persistence.Migrations.PostgreSql
 {
     [DbContext(typeof(PostgreSqlDbContext))]
-    partial class PostgreSqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220707035717_FirstMig_1")]
+    partial class FirstMig_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

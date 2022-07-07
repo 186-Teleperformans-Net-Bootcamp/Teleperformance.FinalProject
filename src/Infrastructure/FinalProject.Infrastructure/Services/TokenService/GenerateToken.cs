@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace FinalProject.Infrastructure.Services
+namespace FinalProject.Infrastructure.Services.TokenService
 {
     public class GenerateToken : IGenerateToken
     {
@@ -17,32 +17,24 @@ namespace FinalProject.Infrastructure.Services
             _configuration = configuration;
         }
 
-        public Token CreateAccessToken(int minute, List<Claim> claims)
+        public Token CreateAccessToken(int day, List<Claim> claims)
         {
-
             Token token = new();
-
-            //Security Key'in simetriğini alıyoruz.
             SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_configuration["Token:SecurityKey"]));
-
-            //Şifrelenmiş kimliği oluşturuyoruz.
-            SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha256);
-
-            //Oluşturulacak token ayarlarını veriyoruz.
-            token.TokenLifeTime = DateTime.UtcNow.AddDays(3);//TODO burası değişken olacak
+            SigningCredentials securityKeyEncryption = new(securityKey, SecurityAlgorithms.HmacSha256);
+            token.TokenLifeTime = DateTime.UtcNow.AddDays(day);
             JwtSecurityToken securityToken = new(
                 audience: _configuration["Token:Audience"],
                 issuer: _configuration["Token:Issuer"],
                 expires: token.TokenLifeTime,
                 notBefore: DateTime.UtcNow,
-                signingCredentials: signingCredentials,
+                signingCredentials: securityKeyEncryption,
                 claims: claims
                 );
-
-            //Token oluşturucu sınıfından bir örnek alalım.
             JwtSecurityTokenHandler tokenHandler = new();
             token.AccessToken = tokenHandler.WriteToken(securityToken);
             return token;
         }
     }
 }
+

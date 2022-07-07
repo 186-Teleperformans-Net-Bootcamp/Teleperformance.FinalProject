@@ -1,19 +1,14 @@
-﻿using FinalProject.Domain.Entities.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using FinalProject.Application.DTOs.ShopList;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinalProject.Persistence.Contexts
 {
-    public class MsSqlDbContext : IdentityDbContext<AppUser, AppRole, string>
+    public class MsSqlDbContext : DbContext
     {
-        public MsSqlDbContext(DbContextOptions options) : base(options)
+        public MsSqlDbContext(DbContextOptions<MsSqlDbContext> options) : base(options)
         {
         }
-
+        public DbSet<ShopListArchiveDto> CompletedShopLists { get; set; }
+        
     }
 }
