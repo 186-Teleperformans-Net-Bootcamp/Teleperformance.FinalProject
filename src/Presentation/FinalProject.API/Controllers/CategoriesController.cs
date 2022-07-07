@@ -3,6 +3,7 @@ using FinalProject.Application.Features.CategoryFeatures.Commands.DeleteCategory
 using FinalProject.Application.Features.CategoryFeatures.Commands.CreateCategory;
 using FinalProject.Application.Features.CategoryFeatures.Commands.UpdateCategory;
 using FinalProject.Application.Wrappers.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using MediatR;
@@ -10,6 +11,7 @@ using FinalProject.Application.Features.CategoryFeatures.Queries.GetCategoryById
 
 namespace FinalProject.API.Controllers
 {
+    [Authorize(Roles = "User,Admin")]
     [Route("api/categories")]
     [ApiController]
     public class CategoriesController : ControllerBase
