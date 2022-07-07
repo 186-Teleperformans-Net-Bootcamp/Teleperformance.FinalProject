@@ -4,12 +4,14 @@ using FinalProject.Application.Features.ProductFeatures.Commands.DeleteProduct;
 using FinalProject.Application.Features.ProductFeatures.Commands.UpdateProduct;
 using FinalProject.Application.Features.ProductFeatures.Queries.GetProductById;
 using FinalProject.Application.Wrappers.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using MediatR;
 
 namespace FinalProject.API.Controllers
 {
+    [Authorize(Roles = "User,Admin")]
     [Route("api/products")]
     [ApiController]
     public class ProductsController : ControllerBase
