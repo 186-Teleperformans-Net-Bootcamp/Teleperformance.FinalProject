@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace FinalProject.API.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase
