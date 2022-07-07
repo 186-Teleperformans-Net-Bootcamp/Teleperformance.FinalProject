@@ -32,8 +32,8 @@ Teleperformance ve Patika iş birliği ile düzenlenen .net bootcamp'i bitirme p
 **Genel Endpoint yapısı**
 ![image](https://user-images.githubusercontent.com/99317183/177711976-489848c3-9264-42c7-8b83-69b83de45e03.png)
 
-###Projenin Eksikleri:
-*Filtreleme ve searching düzenlenecek
-*Fazla if yapıları düzenlenecek
-*CQRS için veritanı command ve query olarak ikiye ayrılıp aralarında haberleşme sağlanacak.
-*Yorum satırları eklenecek
+###Projenin Eksikleri;
+* Filtreleme ve searching düzenlenecek
+* Fazla if yapıları düzenlenecek
+* CQRS için veritanı command ve query olarak ikiye ayrılıp aralarında haberleşme sağlanacak.
+* Yorum satırları eklenecek
