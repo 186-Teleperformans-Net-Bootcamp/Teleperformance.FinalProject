@@ -27,3 +27,8 @@ Teleperformance ve Patika iş birliği ile düzenlenen .net bootcamp'i bitirme p
 ![image](https://user-images.githubusercontent.com/99317183/177711365-3197fb7f-b60e-4f1d-b478-98eee324acaf.png)
 
 **Kullanıcı Listesini tamamlandı olarak işaretlediğinde Sadece adminin görüntülediği veritabanına yazılır
+
+----
+**Genel Endpoint yapısı**
+![image](https://user-images.githubusercontent.com/99317183/177711976-489848c3-9264-42c7-8b83-69b83de45e03.png)
+
